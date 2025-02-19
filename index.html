@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tebak Keberuntungan</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('image.png'); /* Ganti dengan gambar lokal image.png */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .card h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 12px;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Tebak Keberuntungan</h1>
+            <form id="luckForm">
+                <label for="nama">Masukkan Nama:</label><br>
+                <input type="text" name="nama" id="nama" required><br><br>
+                <input type="button" value="Tebak Keberuntungan" onclick="tebakKeberuntungan()"><br><br>
+            </form>
+            <div id="hasil"></div>
+        </div>
+    </div>
+
+    <div class="footer">Created with ❤️ by YourName</div>
+
+    <script>
+        function tebakKeberuntungan() {
+            const nama = document.getElementById("nama").value;
+
+            if (nama === "") {
+                alert("Silakan masukkan nama terlebih dahulu!");
+                return;
+            }
+
+            // Daftar jawaban keberuntungan
+            const jawaban = [
+                "hati hati mas puad ada dijalan.",
+                "Horeg jatim mendekat.",
+                "banjir bandang sumenep.",
+                "ranggay menciummu emuach.",
+                "player cdid sejati.",
+                "lontong sagu grobogan.",
+                "maling besi medan.",
+                "update cdid besok.",
+                "femboy bojonegoro.",
+                "panglima amba 99."
+            ];
+
+            // Drop chances untuk setiap jawaban
+            const peluang = [20, 15, 10, 10, 15, 10, 10, 5, 3, 2];
+
+            // Menghitung total peluang
+            const totalPeluang = peluang.reduce((acc, val) => acc + val, 0);
+
+            // Menentukan angka acak untuk memilih jawaban
+            const acak = Math.floor(Math.random() * totalPeluang) + 1;
+
+            // Menentukan hasil berdasarkan drop chance
+            let peluangAkumulasi = 0;
+            let hasil = "";
+
+            for (let i = 0; i < jawaban.length; i++) {
+                peluangAkumulasi += peluang[i];
+                if (acak <= peluangAkumulasi) {
+                    hasil = jawaban[i];
+                    break;
+                }
+            }
+
+            // Menampilkan hasil
+            document.getElementById("hasil").innerHTML = `
+                <p>Nama: ${nama}</p>
+                <p>Hasil keberuntungan: ${hasil}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
